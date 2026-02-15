@@ -1,58 +1,265 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>{{ subject }}</title>
     <style>
-        body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px; background-color: #f4f4f4; }
-        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0; }
-        h2 { color: #2980b9; margin-top: 25px; border-left: 5px solid #2980b9; padding-left: 10px; }
-        .expression-box { background-color: #e8f6f3; padding: 15px; border-radius: 5px; margin: 15px 0; border: 1px solid #d1f2eb; }
-        .expression { font-size: 1.2em; font-weight: bold; color: #16a085; }
-        .meaning { color: #555; font-style: italic; margin-top: 5px; }
-        .example-list { list-style-type: none; padding: 0; }
-        .example-item { background-color: #f9f9f9; padding: 10px; margin-bottom: 8px; border-left: 3px solid #ddd; }
-        .example-en { font-weight: bold; color: #333; }
-        .example-ko { color: #666; font-size: 0.9em; }
-        .dialogue-box { background-color: #fcf3cf; padding: 15px; border-radius: 5px; margin-top: 15px; border: 1px solid #f9e79f; }
-        .dialogue-line { margin-bottom: 8px; }
-        .speaker { font-weight: bold; color: #d35400; margin-right: 5px; }
-        .footer { margin-top: 30px; text-align: center; font-size: 0.8em; color: #888; border-top: 1px solid #eee; padding-top: 10px; }
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #000;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            margin-right: 8px;
+        }
+
+        /* 1. Words Section */
+        .word-item {
+            margin-bottom: 25px;
+        }
+
+        .word-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .word-meaning-box {
+            margin-bottom: 5px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #000;
+            margin-right: 5px;
+        }
+
+        .example-en {
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+
+        .example-ko {
+            color: #555;
+        }
+
+        .tip-box {
+            background-color: #f9f9f9;
+            border-left: 3px solid #ddd;
+            padding: 8px 12px;
+            margin-top: 5px;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        /* Highlight specific words in bold/bg if needed, but simple is mostly used in PDF */
+        .highlight {
+            font-weight: bold;
+        }
+
+        /* 2. Survival Sentences */
+        .survival-item {
+            margin-bottom: 25px;
+        }
+
+        .situation-title {
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .en-sentence {
+            font-size: 16px;
+            font-weight: bold;
+            color: #d35400;
+            margin-bottom: 5px;
+        }
+
+        /* 3. OPIc Sentences */
+        .opic-item {
+            margin-bottom: 30px;
+        }
+
+        .key-point-list {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .key-point-item {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+            color: #444;
+        }
+
+        /* 4. Complex Sentence */
+        .complex-box {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #d6eaf8;
+            margin-bottom: 20px;
+        }
+
+        .complex-en {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .analysis-item {
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 2px solid #3498db;
+        }
+
+        .grammar-tag {
+            display: inline-block;
+            background-color: #e8f8f5;
+            color: #16a085;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>📅 {{ date }} 오늘의 영어 표현</h1>
-        
-        <div class="expression-box">
-            <div class="expression">{{ content.expression }}</div>
-            <div class="meaning">{{ content.meaning }}</div>
+        <h1>AU 멜버른 생존 & OPIc 대비 영어 공부 ({{ date }}) AU</h1>
+
+        <div class="section-title">
+            <span class="section-icon">☀️</span> 1. 실생활 필수 단어 5개
+        </div>
+        <div style="color: #666; margin-bottom: 20px;">멜버른에서 자주 들을 수 있고, 일상생활에서 유용하게 쓰이는 단어들을 준비했습니다.</div>
+
+        {% for item in content.words %}
+        <div class="word-item">
+            <div class="word-title">{{ loop.index }}. {{ item.word }} ({{ item.pronunciation }})</div>
+            <ul style="list-style-type: circle; margin-top: 5px; padding-left: 20px;">
+                <li><span class="label">뜻:</span> {{ item.meaning }}</li>
+                <li><span class="label">예문:</span> "{{ item.example_en }}" ({{ item.example_ko }})</li>
+                <li><span class="label">한글 뜻:</span> {{ item.meaning }}</li>
+                <li><span class="label">해석 팁:</span> {{ item.tip }}</li>
+            </ul>
+        </div>
+        {% endfor %}
+
+        <div class="section-title">
+            <span class="section-icon">☕</span> 2. 실생활 생존 문장 2개
+        </div>
+        <div style="color: #666; margin-bottom: 20px;">멜버른에서 실제로 맞닥뜨릴 수 있는 상황에서 자신감 있게 사용할 수 있는 문장입니다.</div>
+
+        {% for item in content.survival_sentences %}
+        <div class="survival-item">
+            <div class="situation-title">{{ loop.index }}. 상황: {{ item.situation }}</div>
+            <ul style="list-style-type: circle; margin-top: 5px; padding-left: 20px;">
+                <li><span class="label">영어 문장:</span> "{{ item.en }}"</li>
+                <li><span class="label">한글 뜻:</span> {{ item.ko }}</li>
+                <li><span class="label">해석 팁:</span> {{ item.tip }}</li>
+            </ul>
+        </div>
+        {% endfor %}
+
+        <div class="section-title">
+            <span class="section-icon">✨</span> 3. OPIc 시험 대비 문장 2개 (고급 표현)
+        </div>
+        <div style="color: #666; margin-bottom: 20px;">IM/IH 레벨 이상을 목표로 한다면 좀 더 복잡하고 유창한 표현을 구사하는 연습이 중요합니다.</div>
+
+        {% for item in content.opic_sentences %}
+        <div class="opic-item">
+            <div class="situation-title">{{ loop.index }}. 상황: {{ item.situation }}</div>
+            <ul style="list-style-type: circle; margin-top: 5px; padding-left: 20px;">
+                <li><span class="label">영어 문장:</span> "{{ item.en }}"</li>
+                <li><span class="label">한글 뜻:</span> {{ item.ko }}</li>
+                <li><span class="label">해석 팁:</span>
+                    <ul class="key-point-list">
+                        {% for point in item.key_points %}
+                        <li class="key-point-item">
+                            "<strong>{{ point.phrase }}</strong>": {{ point.desc }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+
+        <div class="section-title">
+            <span class="section-icon">📚</span> 4. 문법적으로 복잡한 긴 문장 1개
+        </div>
+        <div style="color: #666; margin-bottom: 20px;">조금 더 긴 문장을 통해 문장 구조를 이해하고, 고급 문법 요소를 파악하는 연습을 해보겠습니다.</div>
+
+        <div class="complex-box">
+            <ul style="list-style-type: disc; margin-top: 5px; padding-left: 20px;">
+                <li><span class="label">영어 문장:</span> "{{ content.complex_sentence.en }}"</li>
+                <li><span class="label">한글 뜻:</span> {{ content.complex_sentence.ko }}</li>
+                <li><span class="label">구문 분석 및 해석 팁:</span>
+                    <div style="margin-top: 10px; padding-left: 10px;">
+                        {% for item in content.complex_sentence.analysis %}
+                        <div class="analysis-item">
+                            <div style="font-family: monospace; color: #555; margin-bottom: 3px;">{{ item.part }}</div>
+                            <ul style="list-style-type: square; margin-top: 0; padding-left: 20px; color: #666;">
+                                <li><span class="grammar-tag">{{ item.grammar }}</span></li>
+                                <li>해석: "{{ item.meaning }}"</li>
+                                <li>팁: {{ item.tip }}</li>
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </li>
+            </ul>
         </div>
 
-        <h2>📖 예문으로 익히기</h2>
-        <ul class="example-list">
-            {% for example in content.examples %}
-            <li class="example-item">
-                <div class="example-en">{{ example.en }}</div>
-                <div class="example-ko">{{ example.ko }}</div>
-            </li>
-            {% endfor %}
-        </ul>
-
-        <h2>🗣️ 실전 회화</h2>
-        <div class="dialogue-box">
-            {% for line in content.dialogue %}
-            <div class="dialogue-line">
-                <span class="speaker">{{ line.speaker }}:</span>
-                <span class="text">{{ line.en }} ({{ line.ko }})</span>
-            </div>
-            {% endfor %}
-        </div>
-        
         <div class="footer">
             Generated by Gemini AI • <a href="#">Unsubscribe</a>
         </div>
     </div>
 </body>
+
 </html>

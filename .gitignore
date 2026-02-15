@@ -1,0 +1,14 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+
+# Project specific
+*.pdf
+test_output.html
