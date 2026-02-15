@@ -28,7 +28,7 @@ def load_prompt():
         today_str = datetime.now().strftime("%Y-%m-%d")
         
         # 텍스트 파일 내의 {date} 부분을 오늘 날짜로 치환
-        return template.format(date=today_str), today_str
+        return template.replace("{date}", today_str), today_str
         
     except FileNotFoundError:
         print("Error: 프롬프트 파일을 찾을 수 없습니다.")
