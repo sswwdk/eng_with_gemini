@@ -12,7 +12,7 @@ EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER")
 
 # Gemini API 설정
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 # 프롬프트 구성
 today_str = datetime.now().strftime("%Y-%m-%d")
