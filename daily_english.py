@@ -12,9 +12,9 @@ EMAIL_SENDER = os.environ.get("EMAIL_USER")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASS")
 EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER")
 
-# Gemini API 설정 (최신 모델)
+# Gemini API 설정
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 def load_prompt():
     """prompts 폴더의 텍스트 파일을 읽어서 날짜를 적용해 반환"""
