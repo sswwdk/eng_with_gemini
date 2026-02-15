@@ -4,17 +4,17 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import google.generativeai as genai
 
-# 1. 환경 변수 설정 (GitHub Secrets에서 가져옴)
+# 환경 변수 설정
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 EMAIL_SENDER = os.environ.get("EMAIL_USER")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASS")
 EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER")
 
-# 2. Gemini API 설정
+# Gemini API 설정
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
-# 3. 프롬프트 구성 (매일 새로운 내용을 받도록 구성)
+# 프롬프트 구성
 today_str = datetime.now().strftime("%Y-%m-%d")
 prompt = f"""
 너는 멜버른에 거주하는 개발자를 위한 영어 튜터야.
@@ -33,25 +33,26 @@ prompt = f"""
 """
 
 def generate_content():
-    response = model.generate_content(prompt)
-    return response.text
+    try:
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        return f"콘텐츠 생성 실패: {str(e)}"
 
 def send_email(subject, body):
-    msg = MIMEText(body, 'plain', 'utf-8') # 마크다운을 원하면 'html'로 변환 로직 필요하나 텍스트로도 충분
+    msg = MIMEText(body, 'plain', 'utf-8')
     msg['Subject'] = subject
     msg['From'] = EMAIL_SENDER
     msg['To'] = EMAIL_RECEIVER
 
-    # Gmail SMTP 서버 설정 (앱 비밀번호 사용 필수)
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
         server.login(EMAIL_SENDER, EMAIL_PASSWORD)
         server.send_message(msg)
 
 if __name__ == "__main__":
-    try:
-        content = generate_content()
-        subject = f"[Gemini English] {today_str} 멜버른 영어 공부 도착!"
-        send_email(subject, content)
-        print("이메일 전송 성공")
-    except Exception as e:
-        print(f"에러 발생: {e}")
+    print("Gemini에게 영어 공부 콘텐츠 요청 중...")
+    content = generate_content()
+    print("이메일 전송 중...")
+    subject = f"[Gemini English] {today_str} 멜버른 영어 공부 도착!"
+    send_email(subject, content)
+    print("성공! 이메일을 확인하세요.")
