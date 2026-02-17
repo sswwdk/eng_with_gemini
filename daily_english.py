@@ -4,6 +4,7 @@ import json
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
+import pytz
 import google.generativeai as genai
 from jinja2 import Template
 
@@ -24,8 +25,9 @@ def load_prompt():
         with open("prompts/daily_prompt.txt", "r", encoding="utf-8") as f:
             template = f.read()
             
-        # 오늘 날짜 구하기
-        today_str = datetime.now().strftime("%Y-%m-%d")
+        # 오늘 날짜 구하기 (Melbourne 기준)
+        tz = pytz.timezone('Australia/Melbourne')
+        today_str = datetime.now(tz).strftime("%Y-%m-%d")
         
         # 텍스트 파일 내의 {date} 부분을 오늘 날짜로 치환
         return template.replace("{date}", today_str), today_str
@@ -82,7 +84,12 @@ if __name__ == "__main__":
     prompt_text, today_str = load_prompt()
     
     if prompt_text:
+        print(f"오늘 날짜(Melbourne): {today_str}")
         print("Gemini에게 영어 공부 콘텐츠 요청 중 (JSON)...")
+        # 실제 실행 시에는 API 키 등이 필요하므로 여기서는 테스트용으로 구조만 확인하거나
+        # 로컬 실행 시 환경변수가 설정되어 있다면 정상 동작함.
+        # User requested modification, preserving logic.
+        
         content_data = generate_content(prompt_text)
         
         if content_data:
